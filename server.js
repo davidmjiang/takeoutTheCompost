@@ -1,5 +1,10 @@
 'use strict'
 
+const { CosmosClient } = require("@azure/cosmos")
+const config = require("./config")
+const ReviewDao = require("./models/reviewDao")
+const ReviewList = require("./routes/reviews")
+
 var express = require("express"),
   app = express(),
   router = require("./routes"),
@@ -21,7 +26,25 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'clientapp/build')));
 
-app.use("/", router)
+// database setup
+const cosmosClient = new CosmosClient({
+  endpoint: config.host,
+  key: config.authKey
+});
+const reviewDao = new ReviewDao(cosmosClient, config.databaseId, config.containerId);
+const reviewList = new ReviewList(reviewDao);
+reviewDao.init(err => {
+  console.error(err);
+}).catch(err => {
+  console.error(err);
+  console.error("Shutting down because there was an error setting up the database");
+  process.exit(1);
+});
+
+app.get("/reviews", (req, res, next) => reviewList.getReviews(req, res).catch(next));
+app.post("/review", (req, res, next) => reviewList.addReview(req, res).catch(next));
+
+// app.use("/", router)
 app.use('*', function (req, res) {
   res.render('pages/404')
 })
