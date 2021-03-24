@@ -36,9 +36,7 @@ function createCustomClusteredPin(cluster) {
 export const BingMap = {
     init: function(){
         map = new window.Microsoft.Maps.Map(document.getElementById('CovidBingMap'), { 
-            //options
-            //showSearchBar: true, //TODO: embeded map search?
-            supportedMapTypes: [window.Microsoft.Maps.MapTypeId.road, window.Microsoft.Maps.MapTypeId.aerial, window.Microsoft.Maps.MapTypeId.birdseye, window.Microsoft.Maps.MapTypeId.streetside, window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
+            supportedMapTypes: [window.Microsoft.Maps.MapTypeId.road, window.Microsoft.Maps.MapTypeId.aerial, window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
         });
     },
     getMap: function(){        
@@ -127,8 +125,8 @@ export const BingMap = {
                         enableClickedStyle: true                
                     });
                     var infobox = new window.Microsoft.Maps.Infobox(reverseGeocodeRequestOptions.location, { 
-                        title: JSON.parse(message).title, 
-                        description: JSON.parse(message).description, 
+                        title: message.name, 
+                        description: "to-do", 
                         visible: false 
                     });
                     infobox.setMap(map);

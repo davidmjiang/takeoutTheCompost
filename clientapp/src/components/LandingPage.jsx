@@ -8,12 +8,12 @@ import { SignInForm } from './SignInForm';
 import { isTracerView, isCardShare } from '../utilities/userRole';
 import newAppIcon from '../images/contact-assist-icon.svg';
 import { getSingleCard } from '../Api/GetSingleCard';
-import { dateTime } from '../utilities/dateTimeUtilites';
+import { getAreaReviews } from '../Api/GetReviews';
 
 export class LandingPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {showingForm: false, cards: [], showingSignIn: false, signedIn: false};
+        this.state = {showingForm: false, cards: [], showingSignIn: false, signedIn: false, coordinates: {lat:0, lon:0}};
         this.showForm = this.showForm.bind(this);
         this.onFormCancel = this.onFormCancel.bind(this);
         this.onZipChange = this.onZipChange.bind(this);
@@ -35,16 +35,6 @@ export class LandingPage extends React.Component {
         let form = null;
         if (this.state.showingForm) {
             form = this.getForm();
-        }
-
-        let signInButton = null;
-        if (isTracerView() && !this.state.signedIn) {
-            signInButton =  <button className="signin-button" onClick={this.onSignInClick}>Sign in</button>;
-        }
-
-        let signInForm = null;
-        if (this.state.showingSignIn) {
-            signInForm = <SignInForm onCancel={this.onCancelSignIn} onSuccess={this.onSuccessSignIn} />;
         }
 
         let createPsaButton = this.getCreatePsaButton();
@@ -70,13 +60,11 @@ export class LandingPage extends React.Component {
                 </div>
                 <div className="landing-page-right-pane">
                     <div className="landing-page-filters landing-page-top">
-                    {signInButton}
                     {createPsaButton}
                     </div>
                     <div className="landing-page-map">
                         <Map mapInfo={defaultMapInfo} cardInfo={this.state.cards} onMapInit={this.onMapInit} />
                         {form}
-                        {signInForm}
                     </div>
                 </div>
             </div>
@@ -84,27 +72,17 @@ export class LandingPage extends React.Component {
     }
 
     getForm() {
-        if (isTracerView() && this.state.signedIn) {
             return (
                 <div className="form-container">
-                    <CreatePSA onCancel={this.onFormCancel}/>
+                    <CreatePSA onCancel={this.onFormCancel} location={this.state.coordinates}/>
                 </div>
-            )
-        }
-        else {
-            return null;
-        }
+            );
     }
 
     getCreatePsaButton() {
-        if (isTracerView() && this.state.signedIn) {
             return (
                 <button className="create-psa-button" onClick={this.showForm}>Create Announcement</button>
-            )
-        }
-        else {
-            return null;
-        }
+            );
     }
 
     showForm() {
@@ -116,24 +94,7 @@ export class LandingPage extends React.Component {
     }
 
     getCard(cardInfo) {
-        try {
-            let parsedInfo = JSON.parse(cardInfo.userMessage);
-            let messageId = cardInfo.messageId;
-            let messageTimestamp = cardInfo.messageTimestamp;
-            // convert the timestamps to readable dates
-            let startDate = new Date(cardInfo.area.beginTime).toLocaleString();
-            let endDate = new Date(cardInfo.area.endTime).toLocaleString();
-
-            let timeZone = dateTime.getLocalTimeZone();
-
-            return <Card open={false} cardInfo={parsedInfo} startDate={new Date(startDate).toLocaleDateString()} endDate={new Date(endDate).toLocaleDateString()} 
-            startTime={new Date(startDate).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} endTime={new Date(endDate).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})} 
-            timeZone={timeZone}
-            messageId={messageId} messageTimestamp={messageTimestamp}/>;
-        } catch(e) {
-            console.log("JSON.parse error");
-            return null;
-        }
+            return <Card open={false} cardInfo={cardInfo} /> 
     }
 
     onZipChange(ev) {
@@ -178,8 +139,9 @@ export class LandingPage extends React.Component {
                 lat: location.latitude,
                 lon: location.longitude
             };
-            getAreaMatches(params).then(res => {
-                this.setState({ cards: res.matches });
+            this.setState({ coordinates: params });
+            getAreaReviews().then(res => {
+                this.setState({ cards: res });
             });
         }
     }

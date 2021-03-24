@@ -4,6 +4,7 @@ const { CosmosClient } = require("@azure/cosmos")
 const config = require("./config")
 const ReviewDao = require("./models/reviewDao")
 const ReviewList = require("./routes/reviews")
+const yelpApi = require("./routes/yelpApi")
 
 var express = require("express"),
   app = express(),
@@ -42,6 +43,7 @@ reviewDao.init(err => {
 });
 
 app.get("/reviews", (req, res, next) => reviewList.getReviews(req, res).catch(next));
+app.get("/searchResults", (req, res, next) => yelpApi.searchBusinesses(req, res));
 app.post("/review", (req, res, next) => reviewList.addReview(req, res).catch(next));
 
 // app.use("/", router)

@@ -1,37 +1,18 @@
 import React from 'react';
 import chevron from '../images/chevron.svg';
 import calendar from '../images/calendar.svg';
-import AddToCalendarHOC from 'react-add-to-calendar-hoc';
 import bell from "../images/bell.svg";
 import shareIcon from "../images/shareIcon.svg";
 import { dateTime } from '../utilities/dateTimeUtilites';
 import { ShareForm } from './ShareForm';
+import Ratings from '../utilities/Ratings';
 
 /*
 Card props:
 open: boolean - whether card should be expanded or collapsed
 cardInfo: CardInfo - info for the card - equivalent to the userMessage
-startDate: string,
-endDate: string
 */
 
-class CalendarButton extends React.Component{
-    render() {
-        return (
-            <span className="action-link" onClick = {this.props.onClick}>Add to calendar</span>
-        );
-    }
-}
-
-class CalendarDropdown extends React.Component{
-    render() {
-        return (
-            <div className="card-calendar-dropdown">{this.props.children}</div>
-        );
-    }
-}
-
-const AddToCalendarDropdown = AddToCalendarHOC(CalendarButton, CalendarDropdown);
 
 export class Card extends React.Component{
     constructor(props) {
@@ -60,8 +41,6 @@ export class Card extends React.Component{
     }
 
     getOpenCard(shareForm) {
-        const addToCalendarDropdown = this.getAddToCalendarDropdown();
-
         return (
             <div className="card-outline">
                 <div className="card-top">
@@ -69,34 +48,16 @@ export class Card extends React.Component{
                 </div>
                 <div className="card-header" style={this.getHeaderStyles()}>
                     <img src={bell} className="card-header-logo" alt="header-logo"/>
-                    <span className="card-header-text">{this.getCardType()}</span>
+                    <span className="card-header-text">{this.getCardTitle()}</span>
                 </div>
                 <div className="card-body">
-                    <div className="card-title">
-                        {this.getCardTitle()}
-                    </div>
                     <div className="card-description">
                         {this.getCardDescription()}
-                    </div>
-                    <div className="card-address">
-                        {this.getStreetAddress()}
-                        <br />
-                        {this.getCityStateZip()}
-                    </div>
-                    <div className="card-dates">
-                        {this.getCardDates()}
-                    </div>
-                    <div className="card-dates">
-                        {this.getCardTimes()}
-                    </div>
-                    <div className="card-dates">
-                        {this.getCardTimeZone()}
                     </div>
                 </div>
                 <hr className="card-separator" />
                 <div className="card-footer">
                     <img src={calendar} className="card-calendar-icon" alt="calendar"></img>
-                    {addToCalendarDropdown}
                     <img src={shareIcon} className="share-button" alt="share icon" onClick={this.onClickShareButton}></img>
                     {shareForm}
                 </div>
@@ -112,12 +73,9 @@ export class Card extends React.Component{
                 </div>
                 <div className="card-header" style={this.getHeaderStyles()}>
                     <img src={bell} className="card-header-logo" alt="header-logo"/>
-                    <span className="card-header-text">{this.getCardType()}</span>
+                    <span className="card-header-text">{this.getCardTitle()}</span>
                 </div>
                 <div className="card-body">
-                    <div className="card-description">
-                        {this.getCardDescription()}
-                    </div>
                 </div>
             </div>
         )
@@ -142,16 +100,16 @@ export class Card extends React.Component{
         if (this.props.cardInfo.type) {
             return this.props.cardInfo.type
         } else {
-            return "PSA Type";
+            return "Review";
         }
     }
 
     // TO-DO: read title from actual PSA (look in this.props.cardInfo)
     getCardTitle() {
-        if (this.props.cardInfo.title) {
-            return this.props.cardInfo.title;
+        if (this.props.cardInfo.name) {
+            return this.props.cardInfo.name;
         } else {
-            return "Title";
+            return "Name";
         }
     }
 
@@ -217,40 +175,19 @@ export class Card extends React.Component{
         return timeZone;
     }
 
-    // TO-DO; read from actual PSA (look in this.props.cardInfo)
     getCardDescription() {
-        if (this.props.cardInfo.description) {
-            return this.props.cardInfo.description;
+        if (this.props.cardInfo) {
+            return (
+                <ul>
+                    <li>Containers: {Ratings[this.props.cardInfo.containers]}</li>
+                    <li>Cups: {Ratings[this.props.cardInfo.cups]}</li>
+                    <li>Bags: {Ratings[this.props.cardInfo.bags]}</li>
+                    <li>Utentils: {Ratings[this.props.cardInfo.utensils]}</li>
+                </ul>
+            )
         } else {
             return "Description";
         }
-    }
-
-    getAddToCalendarDropdown() {
-        if (this.props.preview === true)
-        {
-            return (
-                <span className="action-link">Add to calendar</span>
-            );
-        }
-        
-        const startDateTime = new Date(`${this.props.startDate} ${this.props.startTime}`);
-        const endDateTime = new Date(`${this.props.endDate} ${this.props.endTime}`);
-        const duration = dateTime.diffHours(endDateTime, startDateTime);
-        
-        return (<AddToCalendarDropdown 
-            className = "card-calendar"
-            event = {
-                {
-                    description: this.getCardDescription(),
-                    duration: duration,
-                    title: this.getCardTitle(),
-                    location: `${this.getStreetAddress()}, ${this.getCityStateZip()}`,
-                    endDatetime: dateTime.getUTCFormatString(endDateTime),
-                    startDatetime: dateTime.getUTCFormatString(startDateTime)
-                }
-            }
-        />);
     }
 
     onClickShareButton() {

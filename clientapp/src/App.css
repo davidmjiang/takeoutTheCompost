@@ -838,3 +838,7 @@ input:checked + .slider:before {
   content: "\e005";
   box-sizing: border-box;
 }
+
+.searchResult {
+  cursor: pointer;
+}

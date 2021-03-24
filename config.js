@@ -13,4 +13,6 @@ if (config.host.includes("https://localhost:")) {
   console.log(`Go to http://localhost:${process.env.PORT || '3000'} to try the sample.`);
 }
 
+config.yelpKey = "unlRL5YlKz67JXzte9bN6_qmv3N8t_n3tqJi6lMdszET2oJVZ0mrl0VfTj-arQAfxKJIsYKYCy8gV0huNdaHv1GySCJ8pjXRRnF2Jaj8Ji_KH-wYhyjQPdb_sRlZYHYx";
+
 module.exports = config;

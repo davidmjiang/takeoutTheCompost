@@ -37,45 +37,17 @@ export class Map extends React.Component {
           const mapCenter = BingMap.getCenter();
           this.props.onMapInit(mapCenter);
         }        
-        //Get List of counties
-        //https://public.opendatasoft.com/explore/dataset/us-zip-code-latitude-and-longitude/table/
         const cards = this.props.cardInfo;
-        //Loop:
-        // BingMap.drawThePinByAddress('20 west st new york ny 10004');
-        // BingMap.drawThePinByAddress('641 ave of america New York NY 10011');
         if(cards && cards.length > 0){
           let locations = [];
-          let address = null;
           cards.forEach((card) => {
-              let lat = card.area.location.latitude;
-              let lon = card.area.location.longitude;
-              locations.push({latitude: card.area.location.latitude, longitude: card.area.location.longitude});
-              address = this.getAddress(card);
-              if(address){
-                BingMap.drawThePinByAddress(address, card.userMessage);
-              } else {
-                BingMap.drawThePinByGeocoords(lat,lon, card.userMessage);
-              }            
-              //BingMap.drawThePinByAddress(JSON.parse(card.userMessage).zip) //test zipcode 
-              //BingMap.drawThePinByGeocoords(card.area.location.latitude, card.area.location.longitude)
-              //TODO: Cleanup test utilities
-              // BingMap.reverseGeocoordsFromZip(JSON.parse(card.userMessage).zip, function(e){
-              //     console.log('Find Geocoords from Zipcode:',e);
-              // })
-              // BingMap.reverseGeocoordsFromAddress(this.getAddress(JSON.parse(card.userMessage).street,
-              // JSON.parse(card.userMessage).city,
-              // JSON.parse(card.userMessage).state,
-              // JSON.parse(card.userMessage).zip), function(e){
-              //     console.log('Find Geocoords from Address:',e);
-              // })
-              // BingMap.reverseAddress(card.area.location.latitude, card.area.location.longitude.lon, function(e){
-              //     console.log('Find address from Geocoords:',e);
-              // })
+              let lat = card.lat;
+              let lon = card.lon;
+              locations.push({latitude: lat, longitude: lon});
+
+              BingMap.drawThePinByGeocoords(lat,lon, card);   
           });  
-          //clustering ?
           BingMap.showCluster();
-          BingMap.showDrawingManager();
-          //set map view based on all locations
           BingMap.setLocationsView(locations, 80);
         }
     }

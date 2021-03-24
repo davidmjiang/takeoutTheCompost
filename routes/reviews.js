@@ -20,8 +20,8 @@ const ReviewDao = require("../models/reviewDao");
    async addReview(req, res) {
      const item = req.body;
 
-     await this.reviewDao.addItem(item);
-     res.redirect("/");
+     const doc = await this.reviewDao.addItem(item);
+     res.send(doc);
    }
  }
 

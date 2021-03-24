@@ -11,6 +11,7 @@ import { publishPSA } from '../Api/publishPSA';
 /*
 Props:
 onCancel()
+location: { lat:0, lon:0}
 */
 
 /*
@@ -51,10 +52,6 @@ export class CreatePSA extends React.Component {
                 <div className={this.getFormStyles()}>
                     <div className="create-psa-header">
                         Create New Announcement
-                        <div className="tracer-form-buttons">
-                            <button className="cancel-button" onClick={this.onCancel}>Cancel</button>
-                            <button className="publish-button" onClick={this.onPublish}>Publish</button>
-                        </div>
                     </div>
                     <div className="flex-container">
                         <div className="create-psa-left-pane">
@@ -75,7 +72,7 @@ export class CreatePSA extends React.Component {
                             </div>
                         </div>
                         <div className="create-psa-middle-pane">
-                            <TracerForm changeCallback={this.tracerFormCallback} onCancel={this.onCancel} onPublish={this.onPublish}/>
+                            <TracerForm changeCallback={this.tracerFormCallback} onCancel={this.onCancel} onPublish={this.onPublish} location={this.props.location} />
                         </div>
                     </div>
                 </div>
