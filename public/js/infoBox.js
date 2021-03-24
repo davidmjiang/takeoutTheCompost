@@ -7,6 +7,11 @@ function getRatingImage(score) {
 function getScoreHtml(category, imgSrc) {
     return `<div class=\"infobox-score\">${category}: <img class=\"infobox-image img-fluid\" src=${imgSrc} /></div>`;
 }
+
+function getTitleHtml(review) {
+    return `<div class=\"infobox-title\">${review.name}</div>`;
+}
+
 function getHtmlString(review) {
     const containerScore = getRatingImage(review.containers);
     const cupScore = getRatingImage(review.cups);
@@ -14,7 +19,7 @@ function getHtmlString(review) {
     const utensilScore = getRatingImage(review.utensils);
     const opening = "<div class=\"infobox\">";
     const closing = "</div>";
-    const result = opening + getScoreHtml("Containers", containerScore) + getScoreHtml("Cups", cupScore) + getScoreHtml("Bags", bagScore) + getScoreHtml("Utensils", utensilScore) + closing;
+    const result = opening + getTitleHtml(review) + getScoreHtml("Containers", containerScore) + getScoreHtml("Cups", cupScore) + getScoreHtml("Bags", bagScore) + getScoreHtml("Utensils", utensilScore) + closing;
     return result;
 }
 
