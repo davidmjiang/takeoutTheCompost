@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "node server.js",
-    "build": "browserify public/js/main.js -o dist/bundle.js"
+    "build": "browserify public/js/main.js -o dist/bundle.js",
+    "buildWatch": "watchify public/js/main.js -o dist/bundle.js -v"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
@@ -14,7 +15,10 @@
     "ejs-lint": "^1.1.0",
     "express": "latest",
     "@azure/cosmos": "3.10.3",
-    "yelp-fusion": "3.0.0",
-    "browserify": "17.0.0"
+    "yelp-fusion": "3.0.0"
+  },
+  "devDependencies": {
+    "browserify": "17.0.0",
+    "watchify": "4.0.0"
   }
 }
