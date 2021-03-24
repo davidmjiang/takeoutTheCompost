@@ -51,34 +51,16 @@ export class CreatePSA extends React.Component {
             <div>
                 <div className={this.getFormStyles()}>
                     <div className="create-psa-header">
-                        Create New Announcement
+                        Create New Review
                     </div>
                     <div className="flex-container">
                         <div className="create-psa-left-pane">
-                            <div className="create-psa-preview">
-                                Preview Public Service Announcement
-                        </div>
-                            <div className="create-psa-mobile-preview">
-                                <div className="create-psa-preview-label">
-                                    Mobile Notification Preview
-                            </div>
-                                <MobilePreview title={this.state.title} description={this.state.description} />
-                            </div>
-                            <div className="create-psa-card-preview">
-                                <div className="create-psa-preview-label">
-                                    Dashboard Preview
-                                </div>
-                                <Card open={true} cardInfo={cardInfo} startDate={this.state.startDate} endDate={this.state.endDate} startTime={this.state.startTime} endTime={this.state.endTime} timeZone={this.state.timeZone} preview={true} />
-                            </div>
-                        </div>
                         <div className="create-psa-middle-pane">
                             <TracerForm changeCallback={this.tracerFormCallback} onCancel={this.onCancel} onPublish={this.onPublish} location={this.props.location} />
                         </div>
+                        </div>
                     </div>
                 </div>
-                <ConfirmationModal show={this.state.formStage === 2} onNoConfirm={this.onNoConfirm} onYesConfirm={this.onYesConfirm}>
-                    <Card open={true} cardInfo={cardInfo} startDate={this.state.startDate} endDate={this.state.endDate} startTime={this.state.startTime} endTime={this.state.endTime} timeZone={this.state.timeZone} preview={true} />
-                </ConfirmationModal>
             </div>
         );
     }

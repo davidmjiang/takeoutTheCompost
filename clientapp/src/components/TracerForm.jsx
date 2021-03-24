@@ -159,7 +159,7 @@ export class TracerForm extends React.Component {
                 </div>
                 <div className="tracer-form-description">
                     <div>
-                        <textarea value={this.state.description} onChange={this.onDescriptionChange} placeholder={sampleDescription} className="tracer-form-textbox" required />
+                        <textarea value={this.state.description} onChange={this.onDescriptionChange} placeholder={sampleDescription} className="tracer-form-textbox" />
                     </div>
                 </div>
                 <div className="tracer-form-buttons">
@@ -227,7 +227,7 @@ export class TracerForm extends React.Component {
         const params = { yelpId, name, containers, cups, bags, utensils, lat, lon };
         publishReview(params).then((res) => {
             console.log(res);
-            this.onCancel();
+            this.props.onPublish();
         });
     }
 }

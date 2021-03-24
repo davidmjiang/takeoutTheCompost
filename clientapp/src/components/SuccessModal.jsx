@@ -20,7 +20,7 @@ export class SuccesModal extends React.Component {
             return (
                 <div className="confirmation-modal-container">
                     <div className="published-text">
-                        PSA Published!
+                        Thanks for your review!
                     </div>
                     <div className="published-checkmark">
                         <img src={checkmark} alt="check mark"/>

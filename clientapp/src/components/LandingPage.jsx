@@ -6,7 +6,7 @@ import { getAreaMatches } from '../Api/GetAreaMatches';
 import { BingMap } from '../utilities/mapUtilities';
 import { SignInForm } from './SignInForm';
 import { isTracerView, isCardShare } from '../utilities/userRole';
-import newAppIcon from '../images/contact-assist-icon.svg';
+import maskLogo from '../images/mask-logo.svg';
 import { getSingleCard } from '../Api/GetSingleCard';
 import { getAreaReviews } from '../Api/GetReviews';
 
@@ -44,12 +44,11 @@ export class LandingPage extends React.Component {
             <div className="landing-page-container flex-container">
                 <div className="landing-page-leftpane">
                     <div className="user-profile landing-page-top">
-                        <div className="app-header">
-                            <img src={newAppIcon} alt={"app icon"} id="app-header-image"/>
-                            <span id="app-header-title">ContactAssist</span>
-                        </div>
                      </div>   
                      <div className="landing-page-location-container">
+                        <div className="app-header">
+                            <img src={maskLogo} alt={"app icon"} id="app-header-image"/>
+                        </div>
                          <input type="text" placeholder="Find location" className="landing-page-find-location" onChange={this.onZipChange}/>
                     </div>
                     <div className="landing-page-cards">
@@ -60,6 +59,7 @@ export class LandingPage extends React.Component {
                 </div>
                 <div className="landing-page-right-pane">
                     <div className="landing-page-filters landing-page-top">
+                    <div id="app-header-title">Takeout the compost</div>
                     {createPsaButton}
                     </div>
                     <div className="landing-page-map">
@@ -81,7 +81,7 @@ export class LandingPage extends React.Component {
 
     getCreatePsaButton() {
             return (
-                <button className="create-psa-button" onClick={this.showForm}>Create Announcement</button>
+                <button className="create-psa-button" onClick={this.showForm}>Create review</button>
             );
     }
 

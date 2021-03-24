@@ -224,7 +224,6 @@ html, body, body>div {
 }
 
 #tracer-form {
-  width: 513px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px 0px 0px 4px;
 }
@@ -292,8 +291,7 @@ html, body, body>div {
   background: white;
   border: .5px solid #DCDEE3;
   border-radius: 4px;
-  width: 475px;
-  height: 250px;
+  width: 80%;
   margin-left: 20px;
   margin-top: 25px;
 }
@@ -340,7 +338,8 @@ html, body, body>div {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px 0px 0px 4px;
   padding-left: 70px;
-  flex: 50%;
+  padding-right: 70px;
+  flex: 100%;
 }
 
 .create-psa-preview {
@@ -387,7 +386,7 @@ html, body, body>div {
 
 .landing-page-container {
   background: #F8F8F8;
-  height: 90%;
+  height: 100%;
 }
 
 .landing-page-top {
@@ -785,11 +784,11 @@ input:checked + .slider:before {
 #app-header-image {
   vertical-align: bottom;
   margin-right: 10px;
-  width: 32px;
 }
 
 #app-header-title {
-  font-size: 28px;
+  font-size: 35px;
+  display: inline-block;
 }
 
 .share-button {

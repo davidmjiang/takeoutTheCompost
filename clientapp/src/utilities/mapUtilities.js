@@ -126,7 +126,7 @@ export const BingMap = {
                     });
                     var infobox = new window.Microsoft.Maps.Infobox(reverseGeocodeRequestOptions.location, { 
                         title: message.name, 
-                        description: "to-do", 
+                        description: "see side bar", 
                         visible: false 
                     });
                     infobox.setMap(map);
