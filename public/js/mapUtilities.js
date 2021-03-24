@@ -1,4 +1,7 @@
+const getHtmlString = require("../js/infoBox");
+
 let map = null; //global 
+let infoBox = null;
 let layer = [];
 let pins = [];
 
@@ -37,6 +40,17 @@ const BingMap = {
     init: function(){
         map = new window.Microsoft.Maps.Map(document.getElementById('ReviewsMap'), { 
             supportedMapTypes: [window.Microsoft.Maps.MapTypeId.road, window.Microsoft.Maps.MapTypeId.aerial, window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
+        });
+        infoBox = new window.Microsoft.Maps.Infobox(map.getCenter(), {
+            visible: false
+        });
+        infoBox.setMap(map);
+        window.Microsoft.Maps.Events.addHandler(map, "click", function(e) {
+            if (infoBox.getOptions().visible && e.targetType == "map") {
+                infoBox.setOptions({ 
+                    visible: false
+                });
+            }
         });
     },
     getMap: function(){        
@@ -124,14 +138,13 @@ const BingMap = {
                         enableHoverStyle: true, 
                         enableClickedStyle: true                
                     });
-                    var infobox = new window.Microsoft.Maps.Infobox(reverseGeocodeRequestOptions.location, { 
-                        title: message.name, 
-                        description: "see side bar", 
-                        visible: false 
-                    });
-                    infobox.setMap(map);
-                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
-                        infobox.setOptions({ visible: !infobox.getOptions.visible });
+                    pushpin.metadata = message;
+                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
+                        infoBox.setOptions({ 
+                            location: e.target.getLocation(),
+                            visible: true,
+                            htmlContent: getHtmlString(e.target.metadata)
+                        });
                     });
                     map.entities.push(pushpin)
                 }

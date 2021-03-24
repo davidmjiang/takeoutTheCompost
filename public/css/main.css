@@ -8,3 +8,16 @@ body {
   background: #F8F8F8;
   padding-top: 80px;
 }
+
+.infobox {
+  background-color: rgb(173, 216,230, .9);
+  color: black;
+  width: 200px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.infobox-image {
+  max-width: 30%;
+  margin-left: 10px;
+}
