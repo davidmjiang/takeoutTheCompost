@@ -21,3 +21,13 @@ body {
   max-width: 30%;
   margin-left: 10px;
 }
+
+.key-image {
+  width: 15%;
+}
+
+.keyName {
+  width: auto;
+}
+
+@include 
