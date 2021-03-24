@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "browserify": "17.0.0",
-    "watchify": "4.0.0"
+    "watchify": "4.0.0",
+    "dotenv": "8.2.0"
   }
 }
