@@ -116,10 +116,7 @@ export class CreatePSA extends React.Component {
     }
 
     onPublish() {
-        let form = document.getElementById("tracer-form");
-        if (form.reportValidity()) {
-            this.setState({formStage: 2});
-        }
+        this.setState({formStage: 3}); 
     }
 
     onNoConfirm() {
