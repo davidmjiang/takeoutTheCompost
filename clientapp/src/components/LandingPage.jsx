@@ -40,7 +40,6 @@ export class LandingPage extends React.Component {
         let createPsaButton = this.getCreatePsaButton();
 
         return (
-
             <div className="landing-page-container flex-container">
                 <div className="landing-page-leftpane">
                     <div className="user-profile landing-page-top">

@@ -46,7 +46,7 @@ app.get("/reviews", (req, res, next) => reviewList.getReviews(req, res).catch(ne
 app.get("/searchResults", (req, res, next) => yelpApi.searchBusinesses(req, res));
 app.post("/review", (req, res, next) => reviewList.addReview(req, res).catch(next));
 
-// app.use("/", router)
+app.use("/", router)
 app.use('*', function (req, res) {
   res.render('pages/404')
 })

@@ -45,32 +45,20 @@ var combineMessageInfoAndMessage = function (messages, matchMessages)
   return matches;
 }
 
-router.get('/', function (req, res) {
-  res.sendFile('index.html', { root: "./clientapp/build"});
-})
-
-router.get('/admin', function (req, res) {
-  res.sendFile('index.html', { root: "./clientapp/build"});
-})
-
-router.get('/welcome', function (req,res) {
+router.get('/', function (req,res) {
   res.render('pages/index');
 })
 
-router.get('/design', function (req, res) { //MSR Design
-  res.render('pages/design')
-})
-
-router.get('/dashboards', function (req, res) { //References
-  res.render('pages/dashboards')
-})
-
-router.get('/about', function (req, res) {
+router.get('/about', function (req, res) { 
   res.render('pages/about')
 })
 
-router.get('/contact', function (req, res) {
-  res.render('pages/contact')
+router.get('/search', function (req, res) {
+  res.render('pages/search')
+})
+
+router.get('/review', function (req, res) {
+  res.render('pages/review')
 })
 
 
