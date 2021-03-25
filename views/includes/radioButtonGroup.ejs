@@ -1,0 +1,28 @@
+<!-- views/includes/radioButtonGroup.ejs -->
+<div class="form-group">
+    <%- label %>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="<%- name %>" value="3" id="flexRadioDefault1" <%- helpers.shouldBeChecked(data, 3) %>>
+      <label class="form-check-label" for="flexRadioDefault1">
+        Compostable
+      </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="<%- name %>" value="2" id="flexRadioDefault1" <%- helpers.shouldBeChecked(data, 2) %>>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Recyclable
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="<%- name %>" value="1" id="flexRadioDefault1" <%- helpers.shouldBeChecked(data, 1) %>>
+        <label class="form-check-label" for="flexRadioDefault1">
+            Neither
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="<%- name %>" value="0" id="flexRadioDefault1" <%- helpers.shouldBeChecked(data, 0) %>>
+        <label class="form-check-label" for="flexRadioDefault1">
+            N/A
+        </label>
+    </div>
+  </div>

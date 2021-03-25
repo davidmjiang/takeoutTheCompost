@@ -53,10 +53,6 @@ router.get('/about', function (req, res) {
   res.render('pages/about')
 })
 
-router.get('/search', function (req, res) {
-  res.render('pages/search')
-})
-
 router.get('/review', function (req, res) {
   res.render('pages/review')
 })

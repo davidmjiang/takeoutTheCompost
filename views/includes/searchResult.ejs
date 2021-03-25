@@ -1,11 +1,12 @@
 <!-- views/includes/searchResult.ejs -->
 <li class="list-group-item search-result-item">
     <div class="search-result-title">
-        <%- yelpResult.name %>
+        <%- yelpResult.name %> 
     </div>
     <% if (reviews[yelpResult.id]) { %>
+        <a class="write-review-link" href=<%= helpers.getNewReviewUrl(yelpResult) %>>edit</a>
         <%- include("../includes/review", {review: reviews[yelpResult.id], helpers: helpers}) %>
     <% } else { %>
-        <div>No review yet</div>
+        <div>No review yet. Help us by <a class="write-review-link" href=<%= helpers.getNewReviewUrl(yelpResult) %>>writing a review!</a></div>
     <% } %>
 </li>

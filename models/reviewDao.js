@@ -51,6 +51,14 @@ class ReviewDao {
     return doc
   }
 
+  async createOrUpdate(item) {
+    debug("Creating or updating item to the database");
+    item.date = Date.now();
+
+    const { resource: doc } = await this.container.items.upsert(item)
+    return doc
+  }
+
   async updateItem(itemId) {
     debug('Update an item in the database')
     const doc = await this.getItem(itemId)

@@ -28,7 +28,19 @@ const viewHelpers = require("../public/js/helpers");
    async addReview(req, res) {
      const item = req.body;
 
-     const doc = await this.reviewDao.addItem(item);
+     // translate the strings into numbers when needed
+     const review = {
+       yelpId: item.yelpId,
+       name: item. name,
+       lat: parseInt(item.lat),
+       lon: parseInt(item.lon),
+       containers: parseInt(item.containers),
+       cups: parseInt(item.cups),
+       bags: parseInt(item.bags),
+       utensils: parseInt(item.utensils)
+     };
+
+     const doc = await this.reviewDao.createOrUpdate(review);
      res.send(doc);
    }
 
@@ -60,6 +72,22 @@ const viewHelpers = require("../public/js/helpers");
     };
     const review = await this.reviewDao.find(querySpec);
     return review;
+   }
+
+   async newReview(req, res) {
+     const yelpId = req.query.yelpId;
+     // check that one doesn't already exist
+     const review = await this.getReviewByYelpId(yelpId);
+     let viewResult = {};
+     if (review && review.length > 0) {
+       // review exists, get the existing info
+       viewResult = review[0];
+
+     } else {
+       // new review, put in the info we know
+      viewResult = { yelpId, name: req.query.name, latitude: req.query.lat, longitude: req.query.lon };
+     }
+     res.render('pages/review', { viewResult, helpers: viewHelpers });
    }
  }
 
