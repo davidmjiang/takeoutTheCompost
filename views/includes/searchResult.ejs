@@ -1,10 +1,10 @@
 <!-- views/includes/searchResult.ejs -->
-<li class="list-group-item">
-    <div>
+<li class="list-group-item search-result-item">
+    <div class="search-result-title">
         <%- yelpResult.name %>
     </div>
     <% if (reviews[yelpResult.id]) { %>
-        <div>Review here</div>
+        <%- include("../includes/review", {review: reviews[yelpResult.id], helpers: helpers}) %>
     <% } else { %>
         <div>No review yet</div>
     <% } %>

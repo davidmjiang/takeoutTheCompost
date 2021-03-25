@@ -7,10 +7,11 @@
 <body style="padding-top: 80px">
   <%- include('../includes/nav') %>
   <div class="container">
-    <h1>Search Page</h1>
+    <h1>Search Results for <%- searchTerm %></h1>
+    <%- include('../includes/imageKey') %>
     <ul class="list-group">
       <% yelpResults.forEach(function(yelpResult){ %>
-        <%- include('../includes/searchResult', {yelpResult: yelpResult, reviews: reviewResults}); %>
+        <%- include('../includes/searchResult', {yelpResult: yelpResult, reviews: reviewResults, helpers: helpers}); %>
       <% }); %>
     </ul>
   </div>

@@ -1,5 +1,6 @@
 const ReviewDao = require("../models/reviewDao");
 const yelpApi = require("./yelpApi");
+const viewHelpers = require("../public/js/helpers");
 
  class ReviewList {
    /**
@@ -44,7 +45,7 @@ const yelpApi = require("./yelpApi");
       return reviewPromise;
      });
      await Promise.all(promises);
-     res.render('pages/search', {yelpResults, reviewResults});
+     res.render('pages/search', {yelpResults, reviewResults, helpers: viewHelpers, searchTerm: req.query.term });
    }
 
    async getReviewByYelpId(yelpId) {

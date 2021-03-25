@@ -29,3 +29,15 @@ body {
 .keyName {
   width: auto;
 }
+
+.search-result-item {
+  background-color: rgb(173, 216,230, .9);
+  font-size: 20px;
+  margin-bottom: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.search-result-title {
+  font-size: 24px;
+}
