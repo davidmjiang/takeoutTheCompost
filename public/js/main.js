@@ -1,5 +1,6 @@
 const getAreaReviews = require("./GetReviews");
 const BingMap = require("./mapUtilities");
+require("./search");
 
 function updateMap(points) {
     if (points && points.length > 0) {
@@ -16,6 +17,10 @@ function updateMap(points) {
 }
 
 function loadMapScenario() {
+    // make sure we are on the map page
+    if (!document.getElementById("ReviewsMap")) {
+        return;
+    }
     if (BingMap.getMap() == null) {
         BingMap.init();
         const mapCenter = BingMap.getCenter();

@@ -1,4 +1,4 @@
-<!-- views/pages/design.ejs -->
+<!-- views/pages/search.ejs -->
 
 <!DOCTYPE HTML>
 <html lang="en">
@@ -7,17 +7,12 @@
 <body style="padding-top: 80px">
   <%- include('../includes/nav') %>
   <div class="container">
-    <div class="jumbotron">
-      <hr/>
-
-      <div class="dashboard_mapContainer">
-        <h3 class="center">Top rated near you</h3>
-        <img src="img/design.JPG" class="mapIframe" id="bingMap" width="100%" height="700px" style="position: relative; display: initial;"/>
-      </div>
-      <hr/>
-      
-    </div>
-    <%- include('../includes/footer') %>
+    <h1>Search Page</h1>
+    <ul class="list-group">
+      <% yelpResults.forEach(function(yelpResult){ %>
+        <%- include('../includes/searchResult', {yelpResult: yelpResult, reviews: reviewResults}); %>
+      <% }); %>
+    </ul>
   </div>
   <%- include('../includes/scripts') %>
 </body>

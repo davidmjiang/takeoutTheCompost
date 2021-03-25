@@ -5,7 +5,7 @@ const apiKey = config.yelpKey;
 const client = yelp.client(apiKey);
 
 var yelpApi = {
-    searchBusinesses: function(req, res) {
+    searchBusinessesApi: function(req, res) {
         const term = req.query.term;
         const latitude = req.query.lat;
         const longitude = req.query.lon;
@@ -18,6 +18,15 @@ var yelpApi = {
             res.send(response.jsonBody.businesses);
         }).catch(e => {
             res.send(e);
+        });
+    },
+    searchBusinesses: function(term, latitude, longitude) {
+        return client.search({
+            term,
+            latitude,
+            longitude
+        }).then(response => {
+            return response.jsonBody.businesses;
         });
     }
 }

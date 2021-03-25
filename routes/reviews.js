@@ -1,4 +1,5 @@
 const ReviewDao = require("../models/reviewDao");
+const yelpApi = require("./yelpApi");
 
  class ReviewList {
    /**
@@ -19,16 +20,7 @@ const ReviewDao = require("../models/reviewDao");
 
    async getReview(req, res) {
      const yelpId = req.params.id;
-     const querySpec = {
-       query: "SELECT * FROM root r WHERE r.yelpId=@yelpId",
-       parameters: [
-         {
-           name: "@yelpId",
-           value: yelpId
-         }
-       ]
-     };
-     const review = await this.reviewDao.find(querySpec);
+     const review = await this.getReviewByYelpId(yelpId);
      res.send(review);
    }
 
@@ -37,6 +29,36 @@ const ReviewDao = require("../models/reviewDao");
 
      const doc = await this.reviewDao.addItem(item);
      res.send(doc);
+   }
+
+   async searchReviews(req, res) {
+     const yelpResults = await yelpApi.searchBusinesses(req.query.term, req.query.lat, req.query.lon);
+     const reviewResults = {};
+     let promises = yelpResults.map((result) => {
+      const yelpId = result.id;
+      const reviewPromise = this.getReviewByYelpId(yelpId).then((review) => {
+        if (review.length > 0) {
+          reviewResults[yelpId] = review[0];
+        }
+      });
+      return reviewPromise;
+     });
+     await Promise.all(promises);
+     res.render('pages/search', {yelpResults, reviewResults});
+   }
+
+   async getReviewByYelpId(yelpId) {
+    const querySpec = {
+      query: "SELECT * FROM root r WHERE r.yelpId=@yelpId",
+      parameters: [
+        {
+          name: "@yelpId",
+          value: yelpId
+        }
+      ]
+    };
+    const review = await this.reviewDao.find(querySpec);
+    return review;
    }
  }
 

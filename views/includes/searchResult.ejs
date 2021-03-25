@@ -1,0 +1,11 @@
+<!-- views/includes/searchResult.ejs -->
+<li class="list-group-item">
+    <div>
+        <%- yelpResult.name %>
+    </div>
+    <% if (reviews[yelpResult.id]) { %>
+        <div>Review here</div>
+    <% } else { %>
+        <div>No review yet</div>
+    <% } %>
+</li>
