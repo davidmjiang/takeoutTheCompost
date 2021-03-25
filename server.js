@@ -44,6 +44,7 @@ reviewDao.init(err => {
 });
 
 app.get("/reviews", (req, res, next) => reviewList.getReviews(req, res).catch(next));
+app.get("/review/:id", (req, res, next) => reviewList.getReview(req, res).catch(next));
 app.get("/searchResults", (req, res, next) => yelpApi.searchBusinesses(req, res));
 app.post("/review", (req, res, next) => reviewList.addReview(req, res).catch(next));
 
