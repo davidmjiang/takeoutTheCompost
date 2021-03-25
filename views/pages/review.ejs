@@ -5,6 +5,7 @@
 <body style="padding-top: 80px">
   <%- include('../includes/nav') %>
   <div>
+    <pre><%- JSON.stringify(viewResult) %></pre>
     <div class="container">
       <div class="jumbotron">
         <form class="form-horizontal" role="form" style="width: 50%;" action="/review" method="post">
@@ -22,6 +23,7 @@
           <input type="hidden" name="yelpId" value='<%- viewResult.yelpId %>' />
           <input type="hidden" name="latitude" value='<%- viewResult.lat %>' />
           <input type="hidden" name="longitude" value='<%- viewResult.lon %>' />
+          <input type="hidden" name="id" value='<%- viewResult.id %>' />
         </form>
       </div>
     </div>

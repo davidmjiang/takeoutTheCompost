@@ -31,9 +31,10 @@ const viewHelpers = require("../public/js/helpers");
      // translate the strings into numbers when needed
      const review = {
        yelpId: item.yelpId,
+       id: item.id,
        name: item. name,
-       lat: parseInt(item.lat),
-       lon: parseInt(item.lon),
+       lat: parseFloat(item.latitude),
+       lon: parseFloat(item.longitude),
        containers: parseInt(item.containers),
        cups: parseInt(item.cups),
        bags: parseInt(item.bags),
