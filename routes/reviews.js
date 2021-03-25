@@ -32,7 +32,7 @@ const viewHelpers = require("../public/js/helpers");
      const review = {
        yelpId: item.yelpId,
        id: item.id,
-       name: item. name,
+       name: item.name,
        lat: parseFloat(item.latitude),
        lon: parseFloat(item.longitude),
        containers: parseInt(item.containers),
@@ -42,7 +42,8 @@ const viewHelpers = require("../public/js/helpers");
      };
 
      const doc = await this.reviewDao.createOrUpdate(review);
-     res.send(doc);
+     // show a thank you page
+     res.render("pages/confirmation", { name: item.name });
    }
 
    async searchReviews(req, res) {
