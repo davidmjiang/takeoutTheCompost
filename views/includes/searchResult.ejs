@@ -3,6 +3,9 @@
     <div class="search-result-title">
         <%- yelpResult.name %> 
     </div>
+    <div class="search-result-details">
+        <%- yelpResult.location.address1 %>, <%- yelpResult.location.city %>, <%- yelpResult.location.state %>
+    </div>
     <% if (reviews[yelpResult.id]) { %>
         <a class="write-review-link" href=<%= helpers.getNewReviewUrl(yelpResult) %>>edit</a>
         <%- include("../includes/review", {review: reviews[yelpResult.id], helpers: helpers}) %>
