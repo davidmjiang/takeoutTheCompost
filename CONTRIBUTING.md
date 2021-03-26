@@ -1,12 +1,11 @@
 # Contributing Guidelines
 
-Welcome, and thank you for helping the dashboard project! 
+Welcome, and thank you for helping the project! 
 
 - [Contributing](#contributing)
 - [Pull Request Process](#pull-request-process)
 - [Code of Conduct](#code-of-conduct)
-- [Style](#style)
-- [Running the COVID Assist dasbhoard](#getting-started)
+- [Getting Started](#getting-started)
   - [Prerequisites](#Prerequisites)
   - [Running](#running)
   - [Testing](#testing)
@@ -104,33 +103,11 @@ available at [http://contributor-covenant.org/version/1/4][version]
 [homepage]: http://contributor-covenant.org
 [version]: http://contributor-covenant.org/version/1/4/
 
-
-## Style
-
-#### EJS-Lint CLI
-
-Linter/Syntax Checker for [EJS Templates](https://github.com/mde/ejs).
-
-```
-Usage:
- ejslint <file> [-d=?]
-
-  If no file is specified, reads from stdin
-
-Options:
-  --help                  Show help                                            [boolean]
-  --version               Show version number                                  [boolean]
-  -d, --delimiter         Specify a custom delimiter ( i.e. <? instead of <% ) [string]
-  --preprocessor-include  Allow old (pre-EJS v3) preprocessor-style includes   [boolean]
-```
-
 ## Getting Started
 
 ### Prerequisites
 
 Node.js
-
-React.js
 
 ### Running, Testing, Deployment:
 

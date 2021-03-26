@@ -7,8 +7,53 @@ function getAreaReviews(params) {
 
 module.exports = getAreaReviews;
 },{}],2:[function(require,module,exports){
+const Ratings = {
+    ratingStrings: {
+        0: "Not available",
+        1: "Neither",
+        2: "Recyclable",
+        3: "Compostable"
+    },
+    ratingImages: {
+        0: "not-available-circle.svg",
+        1: "remove.svg",
+        2: "recycle.svg",
+        3: "compostable.svg"
+    }
+};
+
+module.exports = Ratings;
+},{}],3:[function(require,module,exports){
+const Ratings = require("../js/Ratings");
+
+function getRatingImage(score) {
+    return "img\\" + Ratings.ratingImages[score];
+}
+
+function getScoreHtml(category, imgSrc) {
+    return `<div class=\"infobox-score\">${category}: <img class=\"infobox-image img-fluid\" src=${imgSrc} /></div>`;
+}
+
+function getTitleHtml(review) {
+    return `<div class=\"infobox-title\">${review.name}</div>`;
+}
+
+function getHtmlString(review) {
+    const containerScore = getRatingImage(review.containers);
+    const cupScore = getRatingImage(review.cups);
+    const bagScore = getRatingImage(review.bags);
+    const utensilScore = getRatingImage(review.utensils);
+    const opening = "<div class=\"infobox\">";
+    const closing = "</div>";
+    const result = opening + getTitleHtml(review) + getScoreHtml("Containers", containerScore) + getScoreHtml("Cups", cupScore) + getScoreHtml("Bags", bagScore) + getScoreHtml("Utensils", utensilScore) + closing;
+    return result;
+}
+
+module.exports = getHtmlString;
+},{"../js/Ratings":2}],4:[function(require,module,exports){
 const getAreaReviews = require("./GetReviews");
 const BingMap = require("./mapUtilities");
+require("./search");
 
 function updateMap(points) {
     if (points && points.length > 0) {
@@ -25,6 +70,10 @@ function updateMap(points) {
 }
 
 function loadMapScenario() {
+    // make sure we are on the map page
+    if (!document.getElementById("ReviewsMap")) {
+        return;
+    }
     if (BingMap.getMap() == null) {
         BingMap.init();
         const mapCenter = BingMap.getCenter();
@@ -39,8 +88,11 @@ function loadMapScenario() {
 }
 
 window.onload = loadMapScenario;
-},{"./GetReviews":1,"./mapUtilities":3}],3:[function(require,module,exports){
+},{"./GetReviews":1,"./mapUtilities":5,"./search":6}],5:[function(require,module,exports){
+const getHtmlString = require("../js/infoBox");
+
 let map = null; //global 
+let infoBox = null;
 let layer = [];
 let pins = [];
 
@@ -79,6 +131,17 @@ const BingMap = {
     init: function(){
         map = new window.Microsoft.Maps.Map(document.getElementById('ReviewsMap'), { 
             supportedMapTypes: [window.Microsoft.Maps.MapTypeId.road, window.Microsoft.Maps.MapTypeId.aerial, window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
+        });
+        infoBox = new window.Microsoft.Maps.Infobox(map.getCenter(), {
+            visible: false
+        });
+        infoBox.setMap(map);
+        window.Microsoft.Maps.Events.addHandler(map, "click", function(e) {
+            if (infoBox.getOptions().visible && e.targetType == "map") {
+                infoBox.setOptions({ 
+                    visible: false
+                });
+            }
         });
     },
     getMap: function(){        
@@ -166,14 +229,13 @@ const BingMap = {
                         enableHoverStyle: true, 
                         enableClickedStyle: true                
                     });
-                    var infobox = new window.Microsoft.Maps.Infobox(reverseGeocodeRequestOptions.location, { 
-                        title: message.name, 
-                        description: "see side bar", 
-                        visible: false 
-                    });
-                    infobox.setMap(map);
-                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
-                        infobox.setOptions({ visible: !infobox.getOptions.visible });
+                    pushpin.metadata = message;
+                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
+                        infoBox.setOptions({ 
+                            location: e.target.getLocation(),
+                            visible: true,
+                            htmlContent: getHtmlString(e.target.metadata)
+                        });
                     });
                     map.entities.push(pushpin)
                 }
@@ -243,4 +305,40 @@ const BingMap = {
 };
 
 module.exports = BingMap;
-},{}]},{},[2]);
+},{"../js/infoBox":3}],6:[function(require,module,exports){
+const mapUtilities = require("./mapUtilities");
+
+function getLocation() {
+    // first check if the map gas the coords
+    if (mapUtilities.getMap()) {
+        return mapUtilities.getCenter();
+    }
+    // if not then get from browser
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            return position;
+        });
+    }
+}
+
+const searchButton = document.getElementById("search-button");
+const searchField = document.getElementById("search-field");
+if (searchButton) {
+    searchButton.addEventListener("click", () => {
+        const location = getLocation();
+        const term = searchField.value;
+        const longitude = location.longitude;
+        const latitude = location.latitude;
+        window.location.href=`/searchResults?term=${term}&lat=${latitude}&lon=${longitude}`;
+    });
+}
+
+if (searchField) {
+    searchField.addEventListener("keyup", function(event) {
+        if (event.code === 'Enter') {
+            event.preventDefault();
+            searchButton.click();
+        }
+    });
+}
+},{"./mapUtilities":5}]},{},[4]);
