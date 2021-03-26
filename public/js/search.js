@@ -24,3 +24,12 @@ if (searchButton) {
         window.location.href=`/searchResults?term=${term}&lat=${latitude}&lon=${longitude}`;
     });
 }
+
+if (searchField) {
+    searchField.addEventListener("keyup", function(event) {
+        if (event.code === 'Enter') {
+            event.preventDefault();
+            searchButton.click();
+        }
+    });
+}
