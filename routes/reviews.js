@@ -87,7 +87,7 @@ const viewHelpers = require("../public/js/helpers");
 
      } else {
        // new review, put in the info we know
-      viewResult = { yelpId, name: req.query.name, latitude: req.query.lat, longitude: req.query.lon };
+      viewResult = { yelpId, name: req.query.name, lat: req.query.lat, lon: req.query.lon };
      }
      res.render('pages/review', { viewResult, helpers: viewHelpers });
    }
