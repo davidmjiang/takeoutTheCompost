@@ -17,6 +17,9 @@ var helpers = {
     },
     getMapUrl: function(key) {
         return `https://www.bing.com/api/maps/mapcontrol?key=${key}`;
+    },
+    createRadioButtonId: function(label, value) {
+        return `${label}RadioButton${value}`;
     }
 }
 
