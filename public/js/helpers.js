@@ -14,6 +14,9 @@ var helpers = {
         } else {
             return null;
         }
+    },
+    getMapUrl: function(key) {
+        return `https://www.bing.com/api/maps/mapcontrol?key=${key}`;
     }
 }
 

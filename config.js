@@ -14,5 +14,6 @@ if (config.host.includes("https://localhost:")) {
 }
 
 config.yelpKey = process.env.YELP_KEY;
+config.bingKey = process.env.BING_KEY;
 
 module.exports = config;
