@@ -4,27 +4,26 @@
 <html lang="en">
 <%- include('../includes/head') %>
 <%- include('../includes/mapScript', {mapKey: mapKey, helpers: helpers}) %>
-<body style="padding-top: 80px">
+<body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <%- include('../includes/nav') %>
-  <div class="container">
-    <div class="jumbotron">
-      <div class="center">
+  <div class="main-container" style="padding-top: 80px">
+    <%- include('../includes/nav') %>
+    <div class="container">
+      <div class="center snap-point">
         <h1 class="title center">Takeout the compost</h1>
-        <img src="img/mask-logo.svg" alt="app icon" id="app-header-image" class="img-fluid"/>
+        <img src="img/mask-logo.svg" alt="app icon" id="app-header-image" class="img-fluid" />
       </div>
-      <h2 class="center">
-        Top rated near you
-      </h2>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" id="search-field" placeholder="Search for restaurant" aria-label="Search for restaurant" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="search-button">Search</button>
+      <div class="snap-point map-View">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" id="search-field" placeholder="Search for restaurant"
+            aria-label="Search for restaurant" aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary" type="button" id="search-button">Search</button>
+        </div>
+        <%- include('../includes/imageKey') %>
+        <div class="dashboard_mapContainer">
+          <div id="ReviewsMap"></div>
+        </div>
       </div>
-      <%- include('../includes/imageKey') %>
-      <div class="dashboard_mapContainer">
-        <div id="ReviewsMap" style="width: 100%; height: 700px;"></div>
-      </div>
-      <hr />
     </div>
   </div>
   <%- include('../includes/scripts') %>
