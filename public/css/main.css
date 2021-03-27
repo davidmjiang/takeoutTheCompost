@@ -50,33 +50,31 @@ body {
   height: 700px;
 }
 
-@media (max-width: 576px) { 
-  body {
-    overflow: hidden;
-    height: 100vh;
-  }
+body {
+  overflow: hidden;
+  height: 100vh;
+}
 
-  .main-container {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    max-height: 100vh;
-    scroll-padding-top: 80px;
-  }
-  
-  .snap-point {
-    scroll-snap-align: start;
-  }
-  
-  .map-View {
-    padding-bottom: 10px;
-  }
-  
-  .dashboard_mapContainer {
-    height: 70vh;
-  }
+.main-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  max-height: 100vh;
+  scroll-padding-top: 80px;
+}
 
-  #ReviewsMap {
-    width: 100%;
-    height: 100%;
-  }
- }
+.snap-point {
+  scroll-snap-align: start;
+}
+
+.map-View {
+  padding-bottom: 20px;
+}
+
+.dashboard_mapContainer {
+  height: 60vh;
+}
+
+#ReviewsMap {
+  width: 100%;
+  height: 100%;
+}
