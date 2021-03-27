@@ -6,26 +6,26 @@
     <% var id1 = helpers.createRadioButtonId(label, "1") %>
     <% var id0 = helpers.createRadioButtonId(label, "0") %>
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="<%- name %>" value="3" id="<%- id3 %>" <%- helpers.shouldBeChecked(data, 3) %>>
-      <label class="form-check-label" for="<%- id3 %>">
+      <input class="btn-check" type="radio" name="<%- name %>" value="3" id="<%- id3 %>" <%- helpers.shouldBeChecked(data, 3) %>>
+      <label class="btn btn-outline-secondary" for="<%- id3 %>">
         Compostable
       </label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="<%- name %>" value="2" id="<%- id2 %>" <%- helpers.shouldBeChecked(data, 2) %>>
-        <label class="form-check-label" for="<%- id2 %>">
+        <input class="btn-check" type="radio" name="<%- name %>" value="2" id="<%- id2 %>" <%- helpers.shouldBeChecked(data, 2) %>>
+        <label class="btn btn-outline-secondary" for="<%- id2 %>">
             Recyclable
         </label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="<%- name %>" value="1" id="<%- id1 %>" <%- helpers.shouldBeChecked(data, 1) %>>
-        <label class="form-check-label" for="<%- id1 %>">
+        <input class="btn-check" type="radio" name="<%- name %>" value="1" id="<%- id1 %>" <%- helpers.shouldBeChecked(data, 1) %>>
+        <label class="btn btn-outline-secondary" for="<%- id1 %>">
             Neither
         </label>
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="radio" name="<%- name %>" value="0" id="<%- id0 %>" <%- helpers.shouldBeChecked(data, 0) %>>
-        <label class="form-check-label" for="<%- id0 %>">
+        <input class="btn-check" type="radio" name="<%- name %>" value="0" id="<%- id0 %>" <%- helpers.shouldBeChecked(data, 0) %>>
+        <label class="btn btn-outline-secondary" for="<%- id0 %>">
             N/A
         </label>
     </div>

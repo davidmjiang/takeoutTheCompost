@@ -1,6 +1,5 @@
 var express = require('express'),
   router = express.Router(),
-  API = require('./src/controller'),
   conf = require('./config'),
   basicAuth = require('basic-auth'),
   helpers = require('./public/js/helpers');

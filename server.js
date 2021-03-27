@@ -4,7 +4,6 @@ const { CosmosClient } = require("@azure/cosmos")
 const config = require("./config")
 const ReviewDao = require("./models/reviewDao")
 const ReviewList = require("./routes/reviews")
-const yelpApi = require("./routes/yelpApi")
 
 var express = require("express"),
   app = express(),
