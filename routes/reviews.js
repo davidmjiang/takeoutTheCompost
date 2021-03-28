@@ -11,8 +11,20 @@ const viewHelpers = require("../public/js/helpers");
      this.reviewDao = reviewDao;
    }
    async getReviews(req, res) {
+     const latitude = parseFloat(req.query.lat);
+     const longitude = parseFloat(req.query.lon);
      const querySpec = {
-       query: "SELECT * FROM root r"
+       query: "SELECT * FROM root r WHERE ROUND(r.lat)=@lat AND ROUND(r.lon)=@lon",
+       parameters: [
+         {
+           name: "@lat",
+           value: Math.round(latitude)
+         },
+         {
+           name: "@lon",
+           value: Math.round(longitude)
+         }
+       ]
      };
 
      const items = await this.reviewDao.find(querySpec);

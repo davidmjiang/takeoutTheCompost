@@ -1,5 +1,5 @@
 function getAreaReviews(params) {
-    let url = `/reviews`;
+    let url = `/reviews?lat=${params.lat}&lon=${params.lon}`;
     return fetch(url)
         .then(res => res.json());
 }
