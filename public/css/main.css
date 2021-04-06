@@ -25,6 +25,10 @@ body {
   margin-left: 10px;
 }
 
+.infobox-title {
+  text-align: center;
+}
+
 .key-image {
   width: 15%;
 }
