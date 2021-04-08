@@ -10,6 +10,12 @@ const Ratings = {
         1: "trash.svg",
         2: "bin.svg",
         3: "compostable.svg"
+    },
+    ratingColors: {
+        0: 'white',
+        1: 'black',
+        2: 'rgb(87, 164, 255)',
+        3: 'rgb(158, 232, 192)'
     }
 };
 

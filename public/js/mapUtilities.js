@@ -1,4 +1,5 @@
 const getHtmlString = require("../js/infoBox");
+const ratings = require("../js/Ratings");
 
 let map = null; //global 
 let infoBox = null;
@@ -36,6 +37,22 @@ function createCustomClusteredPin(cluster) {
     });
 }
 
+function createCustomPushpin(review)
+{
+    var c1 = ratings.ratingColors[review.containers];
+    var c2 = ratings.ratingColors[review.cups];
+    var c3 = ratings.ratingColors[review.bags];
+    var c4 = ratings.ratingColors[review.utensils];
+    var radius = 16;
+    var svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="', (radius * 2), '" height="', (radius * 2), '">',
+        '<circle cx="', radius, '" cy="', radius, '" r="', radius, '" fill="', c1,'"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 12, '" fill="', c2, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 8, '" fill="', c3, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 4, '" fill="', c4, '"/>',
+        '</svg>'];
+    return svg.join('');
+}
+
 const BingMap = {
     init: function(){
         map = new window.Microsoft.Maps.Map(document.getElementById('ReviewsMap'), { 
@@ -59,11 +76,9 @@ const BingMap = {
     getCenter: function() {
         return map.getCenter();
     },
-    setView: function(type,lat,lon,zoom){
+    setView: function(lat,lon){
         map.setView({
-            mapTypeId: type,
             center: new window.Microsoft.Maps.Location(lat,lon),
-            zoom: zoom
         });
     },
     setLocationsView: function(locations, padding){
@@ -136,7 +151,8 @@ const BingMap = {
                 callback: function (answer, userData) {
                     var pushpin = new window.Microsoft.Maps.Pushpin(reverseGeocodeRequestOptions.location,{
                         enableHoverStyle: true, 
-                        enableClickedStyle: true                
+                        enableClickedStyle: true,
+                        icon: createCustomPushpin(message)            
                     });
                     pushpin.metadata = message;
                     window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
