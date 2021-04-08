@@ -2,7 +2,7 @@
 
 <%- include('../includes/head') %>
 
-<body style="padding-top: 80px">
+<body>
   <%- include('../includes/nav') %>
   <div>
     <div class="container">
@@ -15,8 +15,8 @@
             </div>
           </div>
           <%- include('../includes/radioButtonGroup', {label: "Containers:", name: "containers", data: viewResult.containers, helpers: helpers }) %>
-          <%- include('../includes/radioButtonGroup', {label: "Cups:", name: "cups", data: viewResult.cups, helpers: helpers }) %>
           <%- include('../includes/radioButtonGroup', {label: "Bags:", name: "bags", data: viewResult.bags, helpers: helpers }) %>
+          <%- include('../includes/radioButtonGroup', {label: "Cups:", name: "cups", data: viewResult.cups, helpers: helpers }) %>
           <%- include('../includes/radioButtonGroup', {label: "Utensils:", name: "utensils", data: viewResult.utensils, helpers: helpers }) %>
           <input id="submit" type="submit" value="Submit" class="btn btn-primary">
           <input type="hidden" name="yelpId" value='<%- viewResult.yelpId %>' />

@@ -10,12 +10,14 @@
       <label class="btn btn-outline-secondary" for="<%- id3 %>">
         Compostable
       </label>
+      <%- include('../includes/questionPopover', {title: "what is compostable?", content: "products made from plants & animals (organic matter), including paper napkins, bags, and other packaging made only from paper"}) %>
     </div>
     <div class="form-check">
         <input class="btn-check" type="radio" name="<%- name %>" value="2" id="<%- id2 %>" <%- helpers.shouldBeChecked(data, 2) %>>
         <label class="btn btn-outline-secondary" for="<%- id2 %>">
             Recyclable
         </label>
+        <%- include('../includes/questionPopover', {title: "what is recyclable?", content:"clean, dry, & three-dimensional plastic, metal, and paper"}) %>
     </div>
     <div class="form-check">
         <input class="btn-check" type="radio" name="<%- name %>" value="1" id="<%- id1 %>" <%- helpers.shouldBeChecked(data, 1) %>>
