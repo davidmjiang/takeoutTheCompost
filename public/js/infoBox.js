@@ -19,7 +19,7 @@ function getHtmlString(review) {
     const utensilScore = getRatingImage(review.utensils);
     const opening = "<div class=\"infobox\">";
     const closing = "</div>";
-    const result = opening + getTitleHtml(review) + getScoreHtml("Containers", containerScore) + getScoreHtml("Cups", cupScore) + getScoreHtml("Bags", bagScore) + getScoreHtml("Utensils", utensilScore) + closing;
+    const result = opening + getTitleHtml(review) + getScoreHtml("Containers", containerScore) + getScoreHtml("Bags", bagScore) + getScoreHtml("Cups", cupScore) + getScoreHtml("Utensils", utensilScore) + closing;
     return result;
 }
 

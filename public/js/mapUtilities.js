@@ -40,15 +40,15 @@ function createCustomClusteredPin(cluster) {
 function createCustomPushpin(review)
 {
     var c1 = ratings.ratingColors[review.containers];
-    var c2 = ratings.ratingColors[review.cups];
-    var c3 = ratings.ratingColors[review.bags];
+    var c2 = ratings.ratingColors[review.bags];
+    var c3 = ratings.ratingColors[review.cups];
     var c4 = ratings.ratingColors[review.utensils];
     var radius = 16;
     var svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="', (radius * 2), '" height="', (radius * 2), '">',
         '<circle cx="', radius, '" cy="', radius, '" r="', radius, '" fill="', c1,'"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 12, '" fill="', c2, '"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 8, '" fill="', c3, '"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 4, '" fill="', c4, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 11, '" fill="', c2, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 6, '" fill="', c3, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 3, '" fill="', c4, '"/>',
         '</svg>'];
     return svg.join('');
 }
