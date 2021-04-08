@@ -104,13 +104,14 @@ blockquote p {
     right: 0;
     position: absolute;
     z-index: -1;
+    margin-top: 20px;
   }
   
-  #compostable-list {
+  .compostable-background {
     position: relative; 
   }
   
-  #compostable-list::after {
+  .compostable-background::after {
     content: "";
     background: url("../img/compostable.svg") no-repeat center;
     background-size: contain;
