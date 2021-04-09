@@ -76,6 +76,18 @@ const BingMap = {
     getCenter: function() {
         return map.getCenter();
     },
+    getPins: function() {
+        return map.entities;
+    },
+    addThrottledHandler: function(eventName, listener, interval) {
+        window.Microsoft.Maps.Events.addThrottledHandler(map, eventName, listener, interval);
+    },
+    getBounds: function() {
+        return map.getBounds();
+    },
+    clear: function() {
+        map.entities.clear();
+    },
     setView: function(lat,lon){
         map.setView({
             center: new window.Microsoft.Maps.Location(lat,lon),

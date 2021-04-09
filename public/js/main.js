@@ -2,18 +2,44 @@ const getAreaReviews = require("./GetReviews");
 const BingMap = require("./mapUtilities");
 require("./search");
 
+function mapIncludes(point) {
+    const entities = BingMap.getPins();
+    for (let i = 0; i < entities.getLength(); i++) {
+        const id = entities.get(i).metadata.yelpId;
+        if (id && id === point.yelpId) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function updateMap(points) {
     if (points && points.length > 0) {
-        let locations = [];
         points.forEach((point) => {
-            let lat = point.lat;
-            let lon = point.lon;
-            locations.push({latitude: lat, longitude: lon});
-
-            BingMap.drawThePinByGeocoords(lat, lon, point);
+            if (!mapIncludes(point)) {
+                let lat = point.lat;
+                let lon = point.lon;
+                BingMap.drawThePinByGeocoords(lat, lon, point);
+            }
         });
-        BingMap.setLocationsView(locations, 80);
     }
+}
+
+function getBoundParams() {
+    const bounds = BingMap.getBounds();
+    const east = bounds.getEast();
+    const north = bounds.getNorth();
+    const south = bounds.getSouth();
+    const west = bounds.getWest();
+    const params = {east, north, south, west};
+    return params;
+}
+
+function getNewPins() {
+    const params = getBoundParams();
+    getAreaReviews(params).then(res => {
+        updateMap(res);
+    });
 }
 
 function loadMapScenario() {
@@ -23,14 +49,7 @@ function loadMapScenario() {
     }
     if (BingMap.getMap() == null) {
         BingMap.init();
-        const mapCenter = BingMap.getCenter();
-        const params = {
-            lat: mapCenter.latitude,
-            lon: mapCenter.longitude
-        };
-        getAreaReviews(params).then(res => {
-            updateMap(res);
-        });
+        BingMap.addThrottledHandler('viewchangeend', getNewPins, 2000);
     }
 }
 

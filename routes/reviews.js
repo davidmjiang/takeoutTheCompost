@@ -12,19 +12,29 @@ const config = require("../config");
      this.reviewDao = reviewDao;
    }
    async getReviews(req, res) {
-     const latitude = parseFloat(req.query.lat);
-     const longitude = parseFloat(req.query.lon);
+     const north = parseFloat(req.query.north);
+     const east = parseFloat(req.query.east);
+     const south = parseFloat(req.query.south);
+     const west = parseFloat(req.query.west);
      const querySpec = {
-       query: "SELECT * FROM root r WHERE ROUND(r.lat)=@lat AND ROUND(r.lon)=@lon",
+       query: "SELECT * FROM root r WHERE r.lat <= @north AND r.lat >= @south AND r.lon <= @east AND r.lon >= @west",
        parameters: [
          {
-           name: "@lat",
-           value: Math.round(latitude)
+           name: "@north",
+           value: north
          },
          {
-           name: "@lon",
-           value: Math.round(longitude)
-         }
+           name: "@east",
+           value: east
+         },
+         {
+          name: "@south",
+          value: south
+        },
+        {
+          name: "@west",
+          value: west
+        }
        ]
      };
 
