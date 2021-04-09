@@ -1,8 +1,8 @@
 <!-- views/pages/imageKey.ejs -->
 <div class="key">
     <div class="row justify-content-center">
-      <div class="col-6"><img src="img/compostable.svg" alt="compostable" class="img-fluid key-image" /> <span class="keyName">Compostable</span></div>
-      <div class="col-6"><img src="img/bin.svg" alt="recyclable" class="img-fluid key-image" /> <span class="keyName">Recyclable<a href="/about#recyclable-list">*</a></span></div>
+      <div class="col-6"><img src="img/compostable.svg" alt="compostable" class="img-fluid key-image" /> <span class="keyName">Compostable</span><%- include('../includes/questionPopover', {title: "what is compostable?", content: "products made from plants & animals (organic matter), including paper napkins, bags, and other packaging made only from paper"}) %></div>
+      <div class="col-6"><img src="img/bin.svg" alt="recyclable" class="img-fluid key-image" /> <span class="keyName">Recyclable</span><%- include('../includes/questionPopover', {title: "what is recyclable?", content:"clean, dry, & three-dimensional plastic, metal, and paper"}) %></div>
     </div>
     <div class="row justify-content-center">
       <div class="col-6"><img src="img/trash.svg" alt="trash" class="img-fluid key-image" /> <span class="keyName">Trash</span></div>
