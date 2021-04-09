@@ -63,6 +63,12 @@ const BingMap = {
         });
         infoBox.setMap(map);
         window.Microsoft.Maps.Events.addHandler(map, "click", function(e) {
+            // hide any popovers
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            popoverTriggerList.forEach((popover) => {
+                bootstrap.Popover.getInstance(popover).hide();
+            });
+            // close any infoboxes
             if (infoBox.getOptions().visible && e.targetType == "map") {
                 infoBox.setOptions({ 
                     visible: false
