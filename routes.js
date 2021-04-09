@@ -28,7 +28,7 @@ var auth = function (req, res, next) {
 }
 
 router.get('/', function (req,res) {
-  res.render('pages/index', {mapKey: conf.bingKey, helpers: helpers});
+  res.render('pages/index', {mapKey: conf.bingKey, helpers: helpers, title:"Takeout the compost", image: "img/mask-logo.svg"});
 })
 
 router.get('/about', function (req, res) { 

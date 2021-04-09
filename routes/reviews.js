@@ -1,6 +1,7 @@
 const ReviewDao = require("../models/reviewDao");
 const yelpApi = require("./yelpApi");
 const viewHelpers = require("../public/js/helpers");
+const config = require("../config");
 
  class ReviewList {
    /**
@@ -55,7 +56,8 @@ const viewHelpers = require("../public/js/helpers");
 
      const doc = await this.reviewDao.createOrUpdate(review);
      // show a thank you page
-     res.render("pages/confirmation", { name: item.name });
+     const title = `Thank you for reviewing ${item.name}!`;
+     res.render("pages/index", { title: title, image: "img/happy-cook.svg", mapKey: config.bingKey, helpers: viewHelpers});
    }
 
    async searchReviews(req, res) {
