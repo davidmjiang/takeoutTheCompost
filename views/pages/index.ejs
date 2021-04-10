@@ -27,6 +27,11 @@
     </div>
   </div>
   <%- include('../includes/scripts') %>
+  <% if (locals.highlightedId) {%>
+  <script type="text/javascript">
+    var highlightedId = '<%- highlightedId %>';
+  </script>
+  <% } %>
 </body>
 
 </html>

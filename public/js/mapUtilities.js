@@ -161,7 +161,59 @@ const BingMap = {
             searchManager.geocode(requestOptions)
         })
     },
-    drawThePinByGeocoords:function(lat, lon, message) { // Draw the pin
+    displayInfobox:function(e, zoomIn) {
+        e = e.target ? e.target : e;
+        infoBox.setOptions({
+            location: e.getLocation(),
+            visible: true,
+            htmlContent: getHtmlString(e.metadata)
+        });
+        // make sure the whole box is shown
+        let buffer = 30;
+        let infoboxAnchor = infoBox.getAnchor();
+        var infoboxLocation = map.tryLocationToPixel(e.getLocation(), window.Microsoft.Maps.PixelReference.control);
+        var dx = infoboxLocation.x - infoboxAnchor.x;
+        var dy = infoboxLocation.y - infoboxAnchor.y;
+
+        if (dy < buffer) {
+            dy *= -1;
+            dy += buffer;
+        } else {
+            dy = 0;
+        }
+        if (dx < buffer) { //Check to see if overlapping with left side of map.
+            //#### Offset in opposite direction.
+            dx *= -1;
+            //#### add a buffer from the left edge of the map.
+            dx += buffer;
+        } else { //Check to see if overlapping with right side of map.
+            dx = map.getWidth() - infoboxLocation.x + infoboxAnchor.x - infoBox.getWidth();
+            //#### If dx is greater than zero then it does not overlap.
+            if (dx > buffer) {
+                dx = 0;
+            } else {
+                //#### add a buffer from the right edge of the map.
+                dx -= buffer;
+            }
+        }
+
+        //#### Adjust the map so infobox is in view
+        if (dx != 0 || dy != 0) {
+            if (zoomIn) {
+                map.setView({
+                    centerOffset: new Microsoft.Maps.Point(dx, dy),
+                    center: e.getLocation(),
+                    zoom: 15
+                });
+            } else {
+                map.setView({
+                    centerOffset: new Microsoft.Maps.Point(dx, dy),
+                    center: map.getCenter()
+                });
+            }
+        }
+    },
+    drawThePinByGeocoords:function(lat, lon, message, highlightPin=false) { // Draw the pin
         window.Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
             var searchManager = new window.Microsoft.Maps.Search.SearchManager(map);
             var reverseGeocodeRequestOptions = {
@@ -173,14 +225,11 @@ const BingMap = {
                         icon: createCustomPushpin(message)            
                     });
                     pushpin.metadata = message;
-                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', function (e) {
-                        infoBox.setOptions({ 
-                            location: e.target.getLocation(),
-                            visible: true,
-                            htmlContent: getHtmlString(e.target.metadata)
-                        });
-                    });
-                    map.entities.push(pushpin)
+                    window.Microsoft.Maps.Events.addHandler(pushpin, 'click', BingMap.displayInfobox);
+                    map.entities.push(pushpin);
+                    if (highlightPin) {
+                        BingMap.displayInfobox(pushpin, true);
+                    }  
                 }
             }
             searchManager.reverseGeocode(reverseGeocodeRequestOptions);

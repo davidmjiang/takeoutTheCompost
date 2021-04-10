@@ -19,7 +19,8 @@ function updateMap(points) {
             if (!mapIncludes(point)) {
                 let lat = point.lat;
                 let lon = point.lon;
-                BingMap.drawThePinByGeocoords(lat, lon, point);
+                let highlightPin = window.highlightedId && window.highlightedId === point.yelpId;
+                BingMap.drawThePinByGeocoords(lat, lon, point, highlightPin);
             }
         });
     }
