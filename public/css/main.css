@@ -88,6 +88,26 @@ blockquote p {
   border-radius: 5px;
 }
 
+.name-field {
+  width: 50%;
+}
+
+.submit-btn {
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+ .radio-button-group > div {
+  display: inline-block;
+ }
+ .radio-group-label {
+   min-width: 100px;
+ }
+ .radio-button-group {
+   margin-top: 20px;
+ }
+}
+
 @media (max-width: 576px) {
   #recyclable-list {
     position: relative;

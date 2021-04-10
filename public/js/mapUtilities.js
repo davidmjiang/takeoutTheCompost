@@ -43,12 +43,12 @@ function createCustomPushpin(review)
     var c2 = ratings.ratingColors[review.bags];
     var c3 = ratings.ratingColors[review.cups];
     var c4 = ratings.ratingColors[review.utensils];
-    var radius = 16;
+    var radius = 12;
     var svg = ['<svg xmlns="http://www.w3.org/2000/svg" width="', (radius * 2), '" height="', (radius * 2), '">',
         '<circle cx="', radius, '" cy="', radius, '" r="', radius, '" fill="', c1,'"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 11, '" fill="', c2, '"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 6, '" fill="', c3, '"/>',
-        '<circle cx="', radius, '" cy="', radius, '" r="', 3, '" fill="', c4, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 8, '" fill="', c2, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 5, '" fill="', c3, '"/>',
+        '<circle cx="', radius, '" cy="', radius, '" r="', 2, '" fill="', c4, '"/>',
         '</svg>'];
     return svg.join('');
 }
@@ -56,7 +56,7 @@ function createCustomPushpin(review)
 const BingMap = {
     init: function(){
         map = new window.Microsoft.Maps.Map(document.getElementById('ReviewsMap'), { 
-            supportedMapTypes: [window.Microsoft.Maps.MapTypeId.road, window.Microsoft.Maps.MapTypeId.aerial, window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
+            supportedMapTypes: [window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
         });
         infoBox = new window.Microsoft.Maps.Infobox(map.getCenter(), {
             visible: false
