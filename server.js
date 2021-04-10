@@ -1,5 +1,5 @@
 'use strict'
-
+const appInsights = require('applicationinsights');
 const { CosmosClient } = require("@azure/cosmos")
 const config = require("./config")
 const ReviewDao = require("./models/reviewDao")
@@ -27,6 +27,8 @@ app.use(express.static(path.join(__dirname, 'dist')))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'clientapp/build')));
 
+appInsights.setup(config.applicationInsightsKey).start();
+
 // database setup
 const cosmosClient = new CosmosClient({
   endpoint: config.host,
@@ -43,7 +45,6 @@ reviewDao.init(err => {
 });
 
 app.get("/reviews", (req, res, next) => reviewList.getReviews(req, res).catch(next));
-app.get("/review/:id", (req, res, next) => reviewList.getReview(req, res).catch(next));
 app.get("/searchResults", (req, res, next) => reviewList.searchReviews(req, res));
 app.get("/newReview", (req, res, next) => reviewList.newReview(req, res).catch(next));
 app.post("/review", (req, res, next) => reviewList.addReview(req, res).catch(next));

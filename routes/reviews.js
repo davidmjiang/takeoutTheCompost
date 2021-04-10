@@ -2,6 +2,7 @@ const ReviewDao = require("../models/reviewDao");
 const yelpApi = require("./yelpApi");
 const viewHelpers = require("../public/js/helpers");
 const config = require("../config");
+const appInsights = require("applicationinsights");
 
  class ReviewList {
    /**
@@ -10,8 +11,10 @@ const config = require("../config");
     */
    constructor(reviewDao) {
      this.reviewDao = reviewDao;
+     this.appInsights = appInsights.defaultClient;
    }
    async getReviews(req, res) {
+     this.appInsights.trackTrace({message: "Request to /reviews started"});
      const north = parseFloat(req.query.north);
      const east = parseFloat(req.query.east);
      const south = parseFloat(req.query.south);
@@ -38,17 +41,15 @@ const config = require("../config");
        ]
      };
 
+     let startTime = Date.now();
      const items = await this.reviewDao.find(querySpec);
+     let duration = Date.now() - startTime;
+     this.appInsights.trackDependency({name: "get reviews from db", duration: duration});
      res.send(items);
    }
 
-   async getReview(req, res) {
-     const yelpId = req.params.id;
-     const review = await this.getReviewByYelpId(yelpId);
-     res.send(review);
-   }
-
    async addReview(req, res) {
+     this.appInsights.trackTrace({message: "Adding a new review"});
      const item = req.body;
 
      // translate the strings into numbers when needed
@@ -64,26 +65,41 @@ const config = require("../config");
        utensils: parseInt(item.utensils)
      };
 
+     let startTime = Date.now();
      const doc = await this.reviewDao.createOrUpdate(review);
+     let duration = Date.now() - startTime;
+     this.appInsights.trackDependency({name: "posting review to db", duration: duration});
      // show a thank you page
      const title = `Thank you for reviewing ${item.name}!`;
      res.render("pages/index", { title: title, image: "img/happy-cook.svg", mapKey: config.bingKey, helpers: viewHelpers});
    }
 
    async searchReviews(req, res) {
+     this.appInsights.trackEvent({name: "Request to /searchResults started", properties: {term: req.query.term}});
+
+     let startTime = Date.now();
      const yelpResults = await yelpApi.searchBusinesses(req.query.term, req.query.lat, req.query.lon);
+     let duration = Date.now() - startTime;
+     this.appInsights.trackDependency({name: "search yelp", duration: duration});
+
      const reviewResults = {};
      let promises = yelpResults.map((result) => {
-      const yelpId = result.id;
-      const reviewPromise = this.getReviewByYelpId(yelpId).then((review) => {
-        if (review.length > 0) {
-          reviewResults[yelpId] = review[0];
-        }
-      });
-      return reviewPromise;
+       const yelpId = result.id;
+       const reviewPromise = this.getReviewByYelpId(yelpId).then((review) => {
+         if (review.length > 0) {
+           reviewResults[yelpId] = review[0];
+         }
+       });
+       return reviewPromise;
      });
+
+     let startTime2 = Date.now();
      await Promise.all(promises);
-     res.render('pages/search', {yelpResults, reviewResults, helpers: viewHelpers, searchTerm: req.query.term });
+     let duration2 = Date.now() - startTime2;
+     this.appInsights.trackDependency({name: "get reviews by yelp id", duration: duration2});
+     this.appInsights.trackEvent({name: "returning search results", properties: {yelpResults: yelpResults.length, reviewResults: Object.keys(reviewResults).length}});
+
+     res.render('pages/search', { yelpResults, reviewResults, helpers: viewHelpers, searchTerm: req.query.term });
    }
 
    async getReviewByYelpId(yelpId) {
@@ -101,16 +117,23 @@ const config = require("../config");
    }
 
    async newReview(req, res) {
+     this.appInsights.trackEvent({name: "new review page", properties: {yelpId: req.query.yelpId}});
      const yelpId = req.query.yelpId;
      // check that one doesn't already exist
+     let startTime = Date.now();
      const review = await this.getReviewByYelpId(yelpId);
+     let duration = Date.now() - startTime;
+     this.appInsights.trackDependency({name: "get review by yelp id", duration: duration});
+
      let viewResult = {};
      if (review && review.length > 0) {
        // review exists, get the existing info
+       this.appInsights.trackTrace({message: "Review exists, getting the existing info"});
        viewResult = review[0];
 
      } else {
        // new review, put in the info we know
+       this.appInsights.trackTrace({message: "New review, putting in the info we know"});
       viewResult = { yelpId, name: req.query.name, lat: req.query.lat, lon: req.query.lon };
      }
      res.render('pages/review', { viewResult, helpers: viewHelpers });
