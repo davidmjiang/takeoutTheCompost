@@ -163,8 +163,9 @@ const BingMap = {
     },
     displayInfobox:function(e, zoomIn) {
         e = e.target ? e.target : e;
+        let location = e.getLocation();
         infoBox.setOptions({
-            location: e.getLocation(),
+            location: location,
             visible: true,
             htmlContent: getHtmlString(e.metadata)
         });
@@ -199,21 +200,13 @@ const BingMap = {
 
         //#### Adjust the map so infobox is in view
         if (dx != 0 || dy != 0) {
-            if (zoomIn) {
-                map.setView({
-                    centerOffset: new Microsoft.Maps.Point(dx, dy),
-                    center: e.getLocation(),
-                    zoom: 15
-                });
-            } else {
-                map.setView({
-                    centerOffset: new Microsoft.Maps.Point(dx, dy),
-                    center: map.getCenter()
-                });
-            }
+            map.setView({
+                centerOffset: new Microsoft.Maps.Point(dx, dy),
+                center: map.getCenter()
+            });
         }
     },
-    drawThePinByGeocoords:function(lat, lon, message, highlightPin=false) { // Draw the pin
+    drawThePinByGeocoords:function(lat, lon, message, highlightPin = false) { // Draw the pin
         window.Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
             var searchManager = new window.Microsoft.Maps.Search.SearchManager(map);
             var reverseGeocodeRequestOptions = {
