@@ -71,7 +71,7 @@ const appInsights = require("applicationinsights");
      this.appInsights.trackDependency({name: "posting review to db", duration: duration});
      // show a thank you page
      const title = `Thank you for reviewing ${item.name}!`;
-     res.render("pages/index", { title: title, image: "img/happy-cook.svg", mapKey: config.bingKey, helpers: viewHelpers, highlightedId: item.yelpId });
+     res.render("pages/index", { title: title, image: "img/happy-cook.svg", mapKey: config.bingKey, helpers: viewHelpers, highlightedId: item.yelpId, lat: item.latitude, lon: item.longitude });
    }
 
    async searchReviews(req, res) {
