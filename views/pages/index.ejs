@@ -14,11 +14,7 @@
         <img src="<%- image %>" alt="app icon" id="app-header-image" class="img-fluid" />
       </div>
       <div class="snap-point map-View">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="search-field" placeholder="Search for restaurant"
-            aria-label="Search for restaurant" aria-describedby="button-addon2">
-          <button class="btn btn-outline-secondary" type="button" id="search-button">Search</button>
-        </div>
+        <%- include('../includes/searchBar') %>
         <%- include('../includes/imageKey') %>
         <div class="dashboard_mapContainer">
           <div id="ReviewsMap"></div>

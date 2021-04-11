@@ -8,6 +8,7 @@
   <%- include('../includes/nav') %>
   <div class="container">
     <h1>Search Results for "<%- searchTerm %>"</h1>
+    <%- include('../includes/searchBar') %>
     <%- include('../includes/imageKey') %>
     <ul class="list-group">
       <% yelpResults.forEach(function(yelpResult){ %>

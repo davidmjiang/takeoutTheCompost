@@ -5,6 +5,13 @@ function getLocation() {
     if (mapUtilities.getMap()) {
         return mapUtilities.getCenter();
     }
+    // if not check for query params
+    const params = new URLSearchParams(window.location.search);
+    const lat = params.get("lat");
+    const lon = params.get("lon");
+    if (lat && lon) {
+        return {longitude: lon, latitude: lat};
+    }
     // if not then get from browser
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
