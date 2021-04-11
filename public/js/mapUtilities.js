@@ -54,10 +54,13 @@ function createCustomPushpin(review)
 }
 
 const BingMap = {
-    init: function(){
+    init: function(centerMapLocation = null){
         map = new window.Microsoft.Maps.Map(document.getElementById('ReviewsMap'), { 
             supportedMapTypes: [window.Microsoft.Maps.MapTypeId.grayscale, window.Microsoft.Maps.MapTypeId.canvasDark]
         });
+        if (centerMapLocation) {
+            map.setView({center: centerMapLocation});
+        }
         infoBox = new window.Microsoft.Maps.Infobox(map.getCenter(), {
             visible: false
         });
