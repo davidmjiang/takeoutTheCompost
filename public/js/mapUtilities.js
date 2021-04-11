@@ -76,6 +76,13 @@ const BingMap = {
             }
         });
     },
+    showEmptyInfobox: function() {
+        infoBox.setOptions({
+            location: this.getCenter(),
+            visible: true,
+            description: "No results in your area. Search for a restaurant to add your review!"
+        });
+    },
     getMap: function(){        
         return map;
     },

@@ -2,6 +2,8 @@ const getAreaReviews = require("./GetReviews");
 const BingMap = require("./mapUtilities");
 require("./search");
 
+let firstRun = true;
+
 function mapIncludes(point) {
     const entities = BingMap.getPins();
     for (let i = 0; i < entities.getLength(); i++) {
@@ -23,6 +25,10 @@ function updateMap(points) {
                 BingMap.drawThePinByGeocoords(lat, lon, point, highlightPin);
             }
         });
+    }
+    else if (firstRun) {
+        BingMap.showEmptyInfobox();
+        firstRun = false;
     }
 }
 
