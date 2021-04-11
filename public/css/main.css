@@ -96,6 +96,10 @@ blockquote p {
   margin-top: 20px;
 }
 
+#ReviewsMap .MicrosoftMap .infobox-body, #ReviewsMap .MicrosoftMap .InfoboxCustom {
+  pointer-events: none;
+}
+
 @media (min-width: 768px) {
  .radio-button-group > div {
   display: inline-block;
